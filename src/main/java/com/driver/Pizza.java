@@ -6,18 +6,15 @@ public class Pizza {
     private final Boolean isVeg;
     private String bill;
 
-    private int extraCheese;
-    private int extraToppings;
-
     private boolean isTakeAway;
     private boolean isExtraCheeseAdded;
     private boolean isExtraToppingsAdded;
 
     public Pizza(Boolean isVeg){
         this.isVeg = isVeg;
-        this.extraCheese = 0;
-        this.extraToppings = 0;
         this.isTakeAway = false;
+        this.isExtraToppingsAdded = false;
+        this.isExtraCheeseAdded = false;
 
         // your code goes here
         if(isVeg) this.price = 300;
@@ -30,16 +27,20 @@ public class Pizza {
 
     public void addExtraCheese(){
         // your code goes here
-        this.price += 80;
-        this.extraCheese++;
+        if(!isExtraCheeseAdded){
+            this.price += 80;
+            this.isExtraCheeseAdded = true;
+        }
 
     }
 
     public void addExtraToppings(){
         // your code goes here
-        if(this.isVeg) this.price += 70;
-        else this.price += 120;
-        this.extraToppings++;
+        if(!this.isExtraToppingsAdded){
+            if (this.isVeg) this.price += 70;
+            else this.price += 120;
+            this.isExtraToppingsAdded = true;
+        }
     }
 
     public void addTakeaway(){
@@ -53,14 +54,11 @@ public class Pizza {
     public String getBill(){
         // your code goes here
         this.bill = "Base Price Of The Pizza: " + (this.isVeg ? 300 : 400) + "\n";
-        if(extraCheese > 0){
-            this.bill += "Extra Cheese Added: " + (80*extraCheese) + "\n";
+        if(isExtraCheeseAdded){
+            this.bill += "Extra Cheese Added: 80"+ "\n";
         }
-        if(extraToppings > 0){
-            int toppingPrice;
-            if(isVeg) toppingPrice = 70;
-            else toppingPrice = 120;
-            this.bill += "Extra Toppings Added: " + (toppingPrice*extraToppings) + "\n";
+        if(isExtraToppingsAdded){
+            this.bill += "Extra Toppings Added: "+ (this.isVeg ? 70 : 120) + "\n";
         }
         if(isTakeAway){
             this.bill += "Paperbag Added: 20 \n";
